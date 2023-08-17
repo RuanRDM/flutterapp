@@ -20,6 +20,7 @@ class ItemTarefa extends StatelessWidget {
 }
 
 class ListaTarefa extends StatefulWidget {
+
   List<Tarefa> _tarefas = [];
 
   @override
@@ -29,6 +30,8 @@ class ListaTarefa extends StatefulWidget {
 }
 
 class ListaTarefaState extends State<ListaTarefa> {
+  TarefaDao dao = TarefaDao();
+
   @override
   Widget build(BuildContext context) {
     //widget._tarefas.add(Tarefa("preparar aula", 'postar'));
@@ -57,7 +60,7 @@ class ListaTarefaState extends State<ListaTarefa> {
         future: dao.findAll(),
         builder: (context, snapshot){
           switch(snapshot.connectionState) {
-            case connectionState.done:
+            case ConnectionState.done:
             if(snapshot.data != null){
               final List<Tarefa>? tarefas = snapshot.data;
               return ListView.builder(
