@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'screens/list.dart';
+import 'menu.dart';
 
 void main() {
-  runApp(MaterialApp(home: ListaTarefa()));
+  runApp(MaterialApp(home: MenuOptions()));
 }
+
+
 
 

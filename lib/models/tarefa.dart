@@ -6,7 +6,6 @@ class Tarefa {
 
   @override
   String toString() {
-    return 'Tarefa(descrição: $descricao, obs: $obs)';
+    return 'Tarefa(descricao: $descricao, obs: $obs)';
   }
 }
-

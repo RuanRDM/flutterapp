@@ -9,11 +9,11 @@ class Editor extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return  TextField(
       controller: controlador,
-      style: TextStyle(fontSize: 20.0),
+      style: TextStyle(fontSize: 24.0),
       decoration: InputDecoration(
-          icon: icone!=null ? Icon(icone) : null,
+          icon: icone != null ? Icon(icone) : null,
           labelText: rotulo,
           hintText: hint),
     );

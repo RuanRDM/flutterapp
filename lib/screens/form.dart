@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../components/editor.dart';
 import '../models/tarefa.dart';
+import '../components/editor.dart';
 import '../database/tarefa_dao.dart';
 
 class FormTarefa extends StatefulWidget {
   final Tarefa? tarefa;
-  FormTarefa([this.tarefa]);
+  FormTarefa({this.tarefa});
 
   @override
   State<StatefulWidget> createState() {
@@ -13,7 +13,7 @@ class FormTarefa extends StatefulWidget {
   }
 }
 
-class FormTarefaState extends State<FormTarefa>{
+class FormTarefaState extends State<FormTarefa> {
   final TextEditingController _controladorTarefa = TextEditingController();
   final TextEditingController _controladorObs = TextEditingController();
   int? _id;
@@ -21,51 +21,51 @@ class FormTarefaState extends State<FormTarefa>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Form de Tarefas"),
-        ),
-        body: SingleChildScrollView(
-         child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget>[
-                Editor(_controladorTarefa,
-                    "Tarefa",
-                    "Informe a tarefa",
-                    Icons.assignment),
-                Editor(_controladorObs,
-                    "Obs",
-                    "Informe a descrição",
-                    Icons.assignment),
-                ElevatedButton(onPressed: (){
-                  criarTarefa(context);
-                }, child: Text("Salvar"))
-              ],
-            )
-          )
-        )
+      appBar: AppBar(
+        title: Text("Form de Tarefas"),
+      ),
+      body: SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: <Widget>[
+                  Editor(_controladorTarefa, "Tarefa", "Informe a Tarefa",
+                      Icons.assignment),
+                  Editor(_controladorObs, "Obs", "Informe a Obs",
+                      Icons.assignment),
+                  ElevatedButton(
+                      onPressed: () {
+                        criarTarefa(context);
+                      },
+                      child: Text("Salvar"))
+                ],
+              ))),
     );
   }
-  void criarTarefa(BuildContext context){
+
+  void criarTarefa(BuildContext context) {
     TarefaDao dao = TarefaDao();
-    if(_id != null){//alteração
+    if (_id != null){ // alteração
       final tarefa = Tarefa(_id!, _controladorTarefa.text, _controladorObs.text);
       dao.update(tarefa).then((id) => Navigator.pop(context));
     }else{
       final tarefa = Tarefa(0, _controladorTarefa.text, _controladorObs.text);
-      dao.save(tarefa).then((id) => Navigator.pop(context));
+      dao.save(tarefa).then((id) {
+        print("tarefa incluída: " + id.toString());
+        Navigator.pop(context);
+      });
     }
-    SnackBar snackBar = SnackBar(content: Text("Tarefa criada com sucesso!"));
+    SnackBar snackBar = SnackBar(content: Text("Tarefa atualizada!"));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
   void initState() {
-    super.initState();
-    if (widget.tarefa != null){
-      _id = widget.tarefa!.id;
-      _controladorTarefa.text = widget.tarefa!.descricao;
-      _controladorObs.text = widget.tarefa!.obs;
-    }
+   super.initState();
+   if (widget.tarefa != null){
+     _id = widget.tarefa!.id;
+     _controladorTarefa.text = widget.tarefa!.descricao;
+     _controladorObs.text = widget.tarefa!.obs;
+   }
   }
 }
