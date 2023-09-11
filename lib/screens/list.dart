@@ -73,7 +73,10 @@ class ListaTarefaState extends State<ListaTarefa> {
         child: ListTile(
           title: Text(_tarefa.descricao),
           subtitle: Text(_tarefa.obs),
-          leading: Icon(Icons.add_alert),
+          leading: Checkbox(
+            value: false,
+            onChanged: (bool? value) {},
+          ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget> [

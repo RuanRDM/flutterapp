@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/screens/form.dart';
+import 'package:flutterapp/screens/formcursos.dart';
 import 'package:flutterapp/screens/list.dart';
+import 'package:flutterapp/screens/listcursos.dart';
 
 class MenuOptions extends StatefulWidget{
   @override
@@ -32,17 +34,35 @@ class MenuOptionsState extends State<MenuOptions>{
         controller: pc,
         children: [
           ListaTarefa(),
-          FormTarefa()
+          FormTarefa(),
+          ListaCurso(),
+          FormCurso()
         ],
         onPageChanged: setPaginaAtual,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: paginaAtual,
-        items: const[
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt),
-          label: "Tarefas"),
-          BottomNavigationBarItem(icon: Icon(Icons.folder),
-          label: "Form")
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: 'Tarefas',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.folder),
+            label: 'Form Tarefas',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Cursos',
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.folder),
+            label: 'Form Cursos',
+            backgroundColor: Colors.pink,
+          ),
         ],
         onTap: (pagina){
           pc?.animateToPage(pagina, duration: Duration(microseconds: 400), curve: Curves.ease);
@@ -51,5 +71,6 @@ class MenuOptionsState extends State<MenuOptions>{
       ),
     );
   }
+
 
 }

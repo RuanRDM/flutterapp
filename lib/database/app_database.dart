@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'tarefa_dao.dart';
+import 'curso_dao.dart';
 
 const String tableSql2 = 'CREATE TABLE cursos ( '
     ' id INTEGER PRIMARY KEY, '
@@ -8,10 +9,11 @@ const String tableSql2 = 'CREATE TABLE cursos ( '
     ' info TEXT)';
 
 Future<Database> getDatabase() async {
-  final String path = join(await getDatabasesPath(), 'dbtarefas.db');
+  final String path = join(await getDatabasesPath(), 'dbapp222.db');
   return openDatabase(path,
       onCreate: (db, version){
         db.execute(TarefaDao.tableSql);
+        db.execute(CursoDao.tableSql);
       },
       onUpgrade:( db, oldVersion, newVersion) async{
         var batch = db.batch();
