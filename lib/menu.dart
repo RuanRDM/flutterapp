@@ -49,7 +49,7 @@ class MenuOptionsState extends State<MenuOptions>{
             backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.folder),
+            icon: Icon(Icons.assignment),
             label: 'Form Tarefas',
             backgroundColor: Colors.green,
           ),
@@ -59,7 +59,7 @@ class MenuOptionsState extends State<MenuOptions>{
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.folder),
+            icon: Icon(Icons.assignment),
             label: 'Form Cursos',
             backgroundColor: Colors.pink,
           ),

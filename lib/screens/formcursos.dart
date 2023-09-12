@@ -18,6 +18,7 @@ class FormCursoState extends State<FormCurso> {
   final TextEditingController _controladorHoras = TextEditingController();
   final TextEditingController _controladorDescricao = TextEditingController();
   final TextEditingController _controladorAutor = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   int? _id;
 
   @override
@@ -27,27 +28,85 @@ class FormCursoState extends State<FormCurso> {
         title: Text("Form de Cursos"),
       ),
       body: SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: <Widget>[
-                  Editor(_controladorCurso, "Curso", "Informe o nome do Curso",
-                      Icons.assignment),
-                  Editor(_controladorHoras, "Horas", "Informe as horas",
-                      Icons.assignment),
-                  Editor(_controladorDescricao, "Descricao", "Informe a descricao",
-                      Icons.assignment),
-                  Editor(_controladorAutor, "Autor", "Informe o autor",
-                      Icons.assignment),
-                  ElevatedButton(
-                      onPressed: () {
-                        criarCurso(context);
-                      },
-                      child: Text("Salvar"))
-                ],
-              ))),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey, // Adicione uma GlobalKey<FormState>
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: _controladorCurso,
+                  decoration: InputDecoration(
+                    labelText: "Curso",
+                    hintText: "Informe o nome do Curso",
+                    icon: Icon(Icons.assignment),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, informe o nome do Curso';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _controladorHoras,
+                  decoration: InputDecoration(
+                    labelText: "Horas",
+                    hintText: "Informe as horas",
+                    icon: Icon(Icons.assignment),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, informe as horas';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _controladorDescricao,
+                  decoration: InputDecoration(
+                    labelText: "Descricao",
+                    hintText: "Informe a descricao",
+                    icon: Icon(Icons.assignment),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, informe a descricao';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _controladorAutor,
+                  decoration: InputDecoration(
+                    labelText: "Autor",
+                    hintText: "Informe o autor",
+                    icon: Icon(Icons.assignment),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, informe o autor';
+                    }
+                    return null;
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Se todos os campos são válidos, execute a ação desejada, como criar o curso.
+                      criarCurso(context);
+                    }
+                  },
+                  child: Text("Salvar"),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
+
 
   void criarCurso(BuildContext context) {
     CursoDao dao = CursoDao();

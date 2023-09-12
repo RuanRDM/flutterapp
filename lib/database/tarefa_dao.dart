@@ -8,16 +8,19 @@ class TarefaDao {
   static const String _id = "id";
   static const String _descricao = "descricao";
   static const String _obs = "obs";
+  static const String _concluida = "concluida";
 
   static const String tableSql = 'CREATE TABLE tarefas ( '
       ' id INTEGER PRIMARY KEY, '
       ' descricao TEXT, '
-      ' obs TEXT)';
+      ' obs TEXT,'
+      ' concluida INTEGER)';
 
   Map<String, dynamic> toMap(Tarefa tarefa){
     final Map<String, dynamic> tarefaMap = Map();
     tarefaMap[_descricao] = tarefa.descricao;
     tarefaMap[_obs] = tarefa.obs;
+    tarefaMap[_concluida] = tarefa.concluida;
     return tarefaMap;
   }
 
@@ -44,7 +47,8 @@ class TarefaDao {
     for (Map<String, dynamic> row in result){
       final Tarefa tarefa = Tarefa(row[_id],
                                    row[_descricao],
-                                   row[_obs]);
+                                   row[_obs],
+                                   row[_concluida]);
       tarefas.add(tarefa);
     }
     return tarefas;

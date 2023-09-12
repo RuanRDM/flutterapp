@@ -15,6 +15,17 @@ class ListaTarefa extends StatefulWidget {
 class ListaTarefaState extends State<ListaTarefa> {
   TarefaDao dao = TarefaDao();
 
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.blue;
+    }
+    return Colors.blue;
+  }
   @override
   Widget build(BuildContext context) {
     //   widget._tarefas.add(Tarefa('preparar aula TDM', 'postar classroom'));
@@ -61,6 +72,13 @@ class ListaTarefaState extends State<ListaTarefa> {
   }
 
   Widget ItemTarefa(BuildContext context, Tarefa _tarefa) {
+
+    bool isChecked;
+    if(_tarefa.concluida==1){
+      isChecked = true;
+    }else{
+      isChecked = false;
+    }
     return GestureDetector(
       onTap: (){
         final Future future = Navigator.push(context,
@@ -74,8 +92,15 @@ class ListaTarefaState extends State<ListaTarefa> {
           title: Text(_tarefa.descricao),
           subtitle: Text(_tarefa.obs),
           leading: Checkbox(
-            value: false,
-            onChanged: (bool? value) {},
+            checkColor: Colors.white,
+            activeColor: Colors.green,
+            value: isChecked,
+            onChanged: (bool? value) {
+              setState(() {
+                _tarefa.concluida = value == true ? 1 : 0;
+                _atualizarDatabase(context, _tarefa);
+              });
+            },
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
@@ -97,5 +122,9 @@ class ListaTarefaState extends State<ListaTarefa> {
 
   void _excluir(BuildContext context, int id){
     dao.delete(id).then((value) => setState((){}));
+  }
+
+  void _atualizarDatabase(BuildContext context, Tarefa tarefa){
+    dao.update(tarefa).then((value) => setState((){}));
   }
 }

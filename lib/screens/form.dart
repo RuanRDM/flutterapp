@@ -16,6 +16,7 @@ class FormTarefa extends StatefulWidget {
 class FormTarefaState extends State<FormTarefa> {
   final TextEditingController _controladorTarefa = TextEditingController();
   final TextEditingController _controladorObs = TextEditingController();
+  final TextEditingController _controladorConcluida = TextEditingController();
   int? _id;
 
   @override
@@ -45,11 +46,13 @@ class FormTarefaState extends State<FormTarefa> {
 
   void criarTarefa(BuildContext context) {
     TarefaDao dao = TarefaDao();
+    int concluida = 0;
+
     if (_id != null){ // alteração
-      final tarefa = Tarefa(_id!, _controladorTarefa.text, _controladorObs.text);
+      final tarefa = Tarefa(_id!, _controladorTarefa.text, _controladorObs.text, concluida);
       dao.update(tarefa).then((id) => Navigator.pop(context));
     }else{
-      final tarefa = Tarefa(0, _controladorTarefa.text, _controladorObs.text);
+      final tarefa = Tarefa(0, _controladorTarefa.text, _controladorObs.text, concluida);
       dao.save(tarefa).then((id) {
         print("tarefa incluída: " + id.toString());
         Navigator.pop(context);
@@ -62,10 +65,12 @@ class FormTarefaState extends State<FormTarefa> {
   @override
   void initState() {
    super.initState();
+   _controladorConcluida.text = "0";
    if (widget.tarefa != null){
      _id = widget.tarefa!.id;
      _controladorTarefa.text = widget.tarefa!.descricao;
      _controladorObs.text = widget.tarefa!.obs;
+     _controladorConcluida.text = widget.tarefa!.concluida.toString();
    }
   }
 }
